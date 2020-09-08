@@ -1,0 +1,28 @@
+{
+  "main": "./index.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "expo": "~38.0.8",
+    "expo-font": "~8.2.1",
+    "expo-location": "~8.2.1",
+    "expo-status-bar": "^1.0.2",
+    "lodash": "^4.17.20",
+    "lottie-react-native": "~2.6.1",
+    "react": "~16.11.0",
+    "react-dom": "~16.11.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
+    "react-native-maps": "0.27.1",
+    "react-native-web": "~0.11.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.6",
+    "babel-preset-expo": "~8.1.0"
+  },
+  "private": true
+}
