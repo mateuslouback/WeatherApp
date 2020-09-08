@@ -60,11 +60,11 @@ To get a local copy up and running follow these simple steps.
 ```sh
 npm install expo-cli --global
 ```
-3. Clone the repo
+3. Clone the repo:
 ```sh
 git clone https://github.com/mateuslouback/WeatherApp.git
 ```
-4. Install packages
+4. Install the packages into the main project folder:
 ```sh
 yarn install
 ```
@@ -72,11 +72,11 @@ yarn install
 ```sh
 src/Pages/Main/index.js in the code snippet (const API_ID = "YOUR_API_ID";)
 ```
-6. Run project on IOS or Android
+6. Run project on IOS or Android:
 ```sh
 yarn start
 ```
-7. Read the QRCode with your phone's camera
+7. Read the QRCode with your phone's camera.
 
 ## Screenshots
 
