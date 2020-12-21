@@ -37,7 +37,7 @@ module.exports = StyleSheet.create({
     width: 220,
     height: 220,
     alignSelf: "center",
-    marginVertical: 30,
+    marginVertical: 20,
     resizeMode: "contain",
   },
   city: {
@@ -62,6 +62,7 @@ module.exports = StyleSheet.create({
     textAlign: "center",
     color: "#FFF",
     fontFamily: "Poppins-Light",
+    textTransform: 'capitalize'
   },
   scrollPage: {
     flex: 1,

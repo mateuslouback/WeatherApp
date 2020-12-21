@@ -70,6 +70,7 @@ export default function App() {
             cancelable: false,
           }
         );
+        setHiddenLoad(true);
       });
 
     setWeatherData(response.data);
@@ -92,6 +93,7 @@ export default function App() {
             cancelable: false,
           }
         );
+        setHiddenLoad(true);
       });
 
     setWeatherData(response.data);
@@ -103,7 +105,7 @@ export default function App() {
 
   const handleCity = debounce((text) => {
     if (text !== "") {
-      loadWeatherCity(text);
+      loadWeatherCity(text.trim());
     }
   }, 1500);
 
@@ -152,11 +154,13 @@ export default function App() {
           <SafeAreaView style={styles.safeArea}>
             <View style={styles.header}>
               <TextInput
-                placeholder="Digite o nome de uma cidade"
+                allowFontScaling={false}
+                placeholder="Digite uma cidade"
                 style={styles.inputCep}
                 placeholderTextColor="#FFF"
                 keyboardAppearance="dark"
                 onChangeText={(text) => handleCity(text)}
+                autoCompleteType="off"
               />
               <TouchableOpacity
                 style={styles.refresh}
