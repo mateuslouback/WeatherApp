@@ -70,6 +70,7 @@ export default function App() {
             cancelable: false,
           }
         );
+        setHiddenLoad(true);
       });
 
     setWeatherData(response.data);
