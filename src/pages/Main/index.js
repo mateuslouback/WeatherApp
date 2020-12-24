@@ -29,7 +29,21 @@ export default function App() {
   const [weatherData, setWeatherData] = useState();
   const [icon, setIcon] = useState();
   const [bgColor, setBgColor] = useState("");
-  const API_ID = "YOUR_API_ID";
+  const API_ID = "cbb0de0c313a1e4ed0bdd1526075375e";
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorLocation(true);
+        return;
+      }
+
+      let dataLocation = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
+      setLocation(dataLocation);
+      loadWeather(dataLocation);
+    })();
+  }, []);
 
   useEffect(() => {
     (async () =>
@@ -39,21 +53,6 @@ export default function App() {
         "Poppins-SemiBold": require("../../../assets/fonts/Poppins-SemiBold.ttf"),
       }))();
   }, []);
-
-  useEffect(() => {
-    requestLocation();
-  }, []);
-
-  const requestLocation = async () => {
-    let { status } = await Location.requestPermissionsAsync();
-    if (status !== "granted") {
-      setErrorLocation(true);
-    }
-
-    let location = await Location.getCurrentPositionAsync({});
-    await setLocation(location);
-    loadWeather(location);
-  };
 
   const loadWeather = useCallback(async (location) => {
     setHiddenLoad(false);
@@ -145,11 +144,9 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      {errorLocation ? <Error /> : null}
-      {hiddenLoad === false ? (
-        <ActivityIndicator style={styles.load} size="large" color="#000" />
-      ) : null}
-      {weatherData ? (
+      {errorLocation && <Error />}
+      {!hiddenLoad && <ActivityIndicator style={styles.load} size="large" color="#000" />}
+      {weatherData &&
         <View style={[styles.container, { backgroundColor: bgColor }]}>
           <SafeAreaView style={styles.safeArea}>
             <View style={styles.header}>
@@ -232,7 +229,7 @@ export default function App() {
             </MapView>
           </ScrollView>
         </View>
-      ) : null}
+      }
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 
 module.exports = StyleSheet.create({
   container: {
@@ -13,6 +13,7 @@ module.exports = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 20,
+    marginTop: Platform.OS === 'android' && 40
   },
   inputCep: {
     width: Dimensions.get("window").width - 105,
