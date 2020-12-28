@@ -13,7 +13,7 @@ module.exports = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 20,
-    marginTop: Platform.OS === 'android' && 40
+    marginTop: Platform.OS === 'android' ? 40 : 0
   },
   inputCep: {
     width: Dimensions.get("window").width - 105,

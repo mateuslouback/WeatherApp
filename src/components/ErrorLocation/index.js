@@ -14,7 +14,7 @@ const ErrorLocation = () => {
         Sem permissão para acessar sua Localização.
       </Text>
       <Text style={styles.errorDescription}>
-        Vá em configurações do App e conceda a permissão de uso da Localização.
+        Vá em configurações do App e conceda a permissão de uso da Localização o tempo todo.
       </Text>
     </View>
   );

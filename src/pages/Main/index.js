@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   TextInput,
@@ -11,37 +11,38 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import * as Permissions from 'expo-permissions';
 import * as Location from "expo-location";
-import MapView, { Marker } from "react-native-maps";
 import * as Font from "expo-font";
+import api from "../../services/api";
+import MapView, { Marker } from "react-native-maps";
 import { debounce } from "lodash";
 import styles from "./styles.js";
 import DetailWeather from "../../components/DetailWeather";
 import Error from "../../components/ErrorLocation";
-import api from "../../services/api";
 import imageIcon from "../../../assets/images/icons/icons.json";
 import Background from "../../components/BackGround/bg.json";
 
-export default function App() {
+const App = () => {
   const [location, setLocation] = useState(null);
   const [errorLocation, setErrorLocation] = useState(false);
-  const [hiddenLoad, setHiddenLoad] = useState(true);
+  const [hiddenLoad, setHiddenLoad] = useState(false);
   const [weatherData, setWeatherData] = useState();
   const [icon, setIcon] = useState();
   const [bgColor, setBgColor] = useState("");
-  const API_ID = "cbb0de0c313a1e4ed0bdd1526075375e";
+  const API_ID = "YOUR_API_ID";
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorLocation(true);
-        return;
+      const { status, permissions } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status === 'granted' || status === 'undetermined') {
+          const dataLocation = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+          setLocation(dataLocation);
+          loadWeather(dataLocation);
+      } else {
+        setErrorLocation(true)
+        setHiddenLoad(true);
       }
-
-      let dataLocation = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
-      setLocation(dataLocation);
-      loadWeather(dataLocation);
     })();
   }, []);
 
@@ -54,7 +55,7 @@ export default function App() {
       }))();
   }, []);
 
-  const loadWeather = useCallback(async (location) => {
+  const loadWeather = async (location) => {
     setHiddenLoad(false);
     let response = await api
       .get(
@@ -77,9 +78,9 @@ export default function App() {
     setIcon(imageIcon[nameIcon]);
     defineBackground(nameIcon);
     setHiddenLoad(true);
-  }, []);
+  };
 
-  const loadWeatherCity = useCallback(async (city) => {
+  const loadWeatherCity = async (city) => {
     setHiddenLoad(false);
     let response = await api
       .get(`?q=${city}&appid=${API_ID}&lang=pt_br`)
@@ -100,7 +101,7 @@ export default function App() {
     setIcon(imageIcon[nameIcon]);
     defineBackground(nameIcon);
     setHiddenLoad(true);
-  }, []);
+  };
 
   const handleCity = debounce((text) => {
     if (text !== "") {
@@ -233,3 +234,5 @@ export default function App() {
     </>
   );
 }
+
+export default App;
